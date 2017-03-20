@@ -7,6 +7,7 @@ public class Product {
     private IntegerProperty amount;
     private ProductType type;
     private BooleanProperty inStock;
+    private BooleanProperty freeShipping;
 
     public Product() {
         this(null, 0, null);
@@ -22,6 +23,7 @@ public class Product {
         } else {
             inStock = new SimpleBooleanProperty(false);
         }
+        freeShipping = new SimpleBooleanProperty(false);
     }
 
     public String getName() {
@@ -36,39 +38,48 @@ public class Product {
         return name;
     }
 
-    public int getAmount() {
-        return amount.get();
+    public IntegerProperty getAmount() {
+        return new SimpleIntegerProperty(amount.getValue());
     }
 
     public void setAmount(int amount) {
         this.amount.set(amount);
     }
 
-    public IntegerProperty amountProperty() {
-        return amount;
+    public boolean isInStock() {
+        return inStock.get();
+
     }
 
-    public ProductType getType() {
-        return type;
+    public String isInStockToString() {
+        if (isInStock()) {
+            return "Available";
+        } else {
+            return "Not available";
+        }
+    }
+
+    public void checkAvailability() {
+        if (amount.asObject().getValue() > 0) {
+            inStock.setValue(true);
+        } else {
+            inStock.setValue(false);
+        }
+    }
+
+    public String getType() {
+        return type.toString();
     }
 
     public void setType(ProductType type) {
         this.type = type;
     }
 
-    public boolean isInStock() {
-        return inStock.get();
-    }
-
-    public void setInStock(boolean inStock) {
-        this.inStock.set(inStock);
-    }
-
-    public BooleanProperty inStockProperty() {
-        return inStock;
-    }
-
     public StringProperty typeProperty() {
         return new SimpleStringProperty(type.toString());
+    }
+
+    public void setFreeShipping(boolean freeShipping) {
+        this.freeShipping.set(freeShipping);
     }
 }

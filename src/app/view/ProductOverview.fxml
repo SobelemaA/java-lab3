@@ -55,9 +55,9 @@
                           <Label layoutX="64.0" layoutY="14.0" text="Product detail:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                           <ButtonBar buttonMinWidth="40.0" layoutX="11.0" layoutY="244.0" minHeight="35.0" minWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                               <buttons>
-                                  <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="20.0" minWidth="40.0" mnemonicParsing="false" onAction="#onClickButtonNew" prefHeight="25.0" prefWidth="50.0" text="New" textAlignment="CENTER" />
-                                  <Button alignment="CENTER" mnemonicParsing="false" text="Edit" textAlignment="CENTER" />
-                                  <Button alignment="CENTER" mnemonicParsing="false" text="Delete" textAlignment="CENTER" />
+                                  <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="20.0" minWidth="40.0" mnemonicParsing="false" onAction="#handleNewButton" prefHeight="25.0" prefWidth="50.0" text="New" textAlignment="CENTER" />
+                                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleEditButton" text="Edit" textAlignment="CENTER" />
+                                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleDeleteButton" text="Delete" textAlignment="CENTER" />
                               </buttons>
                           </ButtonBar>
                       </children>

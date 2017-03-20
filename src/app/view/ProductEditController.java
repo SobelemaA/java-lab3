@@ -1,0 +1,90 @@
+package app.view;
+
+import app.model.Product;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+public class ProductEditController {
+    private Stage productEditStage;
+    private Product product;
+    private boolean okClicked = false;
+
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField amountField;
+    @FXML
+    private ComboBox typeComboBox;
+    @FXML
+    private CheckBox freeShippingCheckBox;
+
+
+    @FXML
+    private void initialize() {
+    }
+
+    public void setProductEditStage(Stage productEditStage) {
+        this.productEditStage = productEditStage;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+        nameField.setText(product.getName());
+        amountField.setText(product.getAmount().asObject().getValue().toString());
+        product.checkAvailability();
+        //typeComboBox.set
+        // nameLabel
+    }
+
+
+    public boolean isOkClicked() {
+        return okClicked;
+    }
+
+    @FXML
+    private void handleOkButton() {
+        if (isInputValid()) {
+            product.setName(nameField.getText());
+            product.setAmount(Integer.parseInt(amountField.getText()));
+            okClicked = true;
+            productEditStage.close();
+        }
+    }
+
+    private boolean isInputValid() {
+        String errorMessage = "";
+
+        if (nameField.getText() == null || nameField.getText().length() == 0) {
+            errorMessage += "No valid name\n";
+        }
+        if (amountField.getText() == null) {
+            errorMessage += "No valid amount\n";
+        } else {
+            try {
+                Integer.parseInt(amountField.getText());
+            } catch (NumberFormatException e) {
+                errorMessage += "No valid amount, must be integer number.\n";
+            }
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(productEditStage);
+            alert.setTitle("Invalid fields.");
+            alert.setHeaderText("Please correct invalid fields.");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            return false;
+        }
+    }
+
+    @FXML
+    private void handleCancelButton() {
+        productEditStage.close();
+    }
+}
