@@ -2,6 +2,7 @@ package app.view;
 
 import app.MainApp;
 import app.model.Product;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -25,6 +26,8 @@ public class ProductOverviewController {
     private Label amountLabel;
     @FXML
     private Label inStockLabel;
+    @FXML
+    private Label freeShippingLabel;
 
     private MainApp mainApp;
 
@@ -34,7 +37,7 @@ public class ProductOverviewController {
     @FXML
     private void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
         showProductDetails(null);
         productTable.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> showProductDetails(newValue)));
@@ -51,11 +54,13 @@ public class ProductOverviewController {
             typeLabel.setText(product.getType());
             amountLabel.setText(product.getAmount().asObject().getValue().toString());
             inStockLabel.setText(product.isInStockToString());
+            freeShippingLabel.setText(product.isFreeShipToString());
         } else {
             nameLabel.setText("");
             typeLabel.setText("");
             amountLabel.setText("");
             inStockLabel.setText("");
+            freeShippingLabel.setText("");
         }
     }
 

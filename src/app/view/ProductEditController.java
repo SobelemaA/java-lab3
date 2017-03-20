@@ -1,6 +1,7 @@
 package app.view;
 
 import app.model.Product;
+import app.model.ProductType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
@@ -18,13 +19,14 @@ public class ProductEditController {
     @FXML
     private TextField amountField;
     @FXML
-    private ComboBox typeComboBox;
+    private ComboBox<ProductType> typeField;
     @FXML
     private CheckBox freeShippingCheckBox;
 
 
     @FXML
     private void initialize() {
+       typeField.getItems().addAll(ProductType.values());
     }
 
     public void setProductEditStage(Stage productEditStage) {
@@ -36,7 +38,7 @@ public class ProductEditController {
         nameField.setText(product.getName());
         amountField.setText(product.getAmount().asObject().getValue().toString());
         product.checkAvailability();
-        //typeComboBox.set
+        //typeField.set
         // nameLabel
     }
 

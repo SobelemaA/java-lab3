@@ -5,6 +5,8 @@ import app.model.ProductType;
 import app.view.ProductEditController;
 import app.view.ProductOverviewController;
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +18,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static app.model.ProductType.*;
+
 public class MainApp extends Application {
 
     private Stage primaryStage;
@@ -24,10 +28,10 @@ public class MainApp extends Application {
     private ObservableList<Product> productData = FXCollections.observableArrayList();
 
     public MainApp() {
-        productData.add(new Product("Tacos", 0, ProductType.FOOD));
-        productData.add(new Product("Pilsner Urquell", 1, ProductType.BEER));
-        productData.add(new Product("Dom Perignon", 2, ProductType.WINE));
-        productData.add(new Product("Marlboro Red", 3, ProductType.CIGARETTE));
+        productData.add(new Product("Tacos", 0, new SimpleObjectProperty<>(FOOD)));
+        productData.add(new Product("Pilsner Urquell", 1, new SimpleObjectProperty<>(BEER)));
+        productData.add(new Product("Dom Perignon", 2, new SimpleObjectProperty<>(WINE)));
+        productData.add(new Product("Marlboro Red", 3, new SimpleObjectProperty<>(CIGARETTE)));
     }
 
     public static void main(String[] args) {

@@ -5,16 +5,17 @@ import javafx.beans.property.*;
 public class Product {
     private StringProperty name;
     private IntegerProperty amount;
-    private ProductType type;
+    private ObjectProperty<ProductType> type;
     private BooleanProperty inStock;
     private BooleanProperty freeShipping;
 
     public Product() {
         this(null, 0, null);
         inStock = new SimpleBooleanProperty(false);
+        freeShipping = new SimpleBooleanProperty(false);
     }
 
-    public Product(String name, int amount, ProductType type) {
+    public Product(String name, int amount, ObjectProperty<ProductType> type) {
         this.name = new SimpleStringProperty(name);
         this.amount = new SimpleIntegerProperty(amount);
         this.type = type;
@@ -68,10 +69,10 @@ public class Product {
     }
 
     public String getType() {
-        return type.toString();
+        return this.type.get().toString();
     }
 
-    public void setType(ProductType type) {
+    public void setType(ObjectProperty<ProductType> type) {
         this.type = type;
     }
 
@@ -81,5 +82,13 @@ public class Product {
 
     public void setFreeShipping(boolean freeShipping) {
         this.freeShipping.set(freeShipping);
+    }
+    public String isFreeShipToString(){
+        if(freeShipping.getValue()){
+            return "Yes";
+        }
+        else{
+            return "No";
+        }
     }
 }

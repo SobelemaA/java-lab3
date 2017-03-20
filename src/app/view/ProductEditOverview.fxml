@@ -27,7 +27,7 @@
             <Label text="Product name:" />
             <Label text="Amount:" GridPane.rowIndex="1" />
             <Label text="Product type:" GridPane.rowIndex="2" />
-            <ComboBox fx:id="typeComboBox" prefWidth="157.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="typeField" prefWidth="157.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <CheckBox fx:id="freeShippingCheckBox" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Free shipping" GridPane.rowIndex="3" />
             <TextField fx:id="nameField" GridPane.columnIndex="1" />
