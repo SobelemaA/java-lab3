@@ -2,7 +2,6 @@ package app.view;
 
 import app.MainApp;
 import app.model.Product;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -15,8 +14,6 @@ public class ProductOverviewController {
     private TableView<Product> productTable;
     @FXML
     private TableColumn<Product, String> nameColumn;
-    @FXML
-    private TableColumn<Product, String> typeColumn;
 
     @FXML
     private Label nameLabel;
@@ -37,10 +34,9 @@ public class ProductOverviewController {
     @FXML
     private void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
-        showProductDetails(null);
         productTable.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> showProductDetails(newValue)));
+        showProductDetails(null);
     }
 
     public void setMainApp(MainApp mainApp) {
@@ -50,11 +46,12 @@ public class ProductOverviewController {
 
     private void showProductDetails(Product product) {
         if (product != null) {
+            product.checkAvailability();
             nameLabel.setText(product.getName());
             typeLabel.setText(product.getType());
-            amountLabel.setText(product.getAmount().asObject().getValue().toString());
+            amountLabel.setText(product.amountProperty().asObject().getValue().toString());
             inStockLabel.setText(product.isInStockToString());
-            freeShippingLabel.setText(product.isFreeShipToString());
+            freeShippingLabel.setText(product.isFreeShippingToString());
         } else {
             nameLabel.setText("");
             typeLabel.setText("");
@@ -67,6 +64,7 @@ public class ProductOverviewController {
     @FXML
     private void handleNewButton() {
         Product tempProduct = new Product();
+
         boolean okClicked = mainApp.showProductEditOverview(tempProduct);
         if (okClicked) {
             mainApp.getProductData().add(tempProduct);

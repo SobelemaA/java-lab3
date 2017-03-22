@@ -21,25 +21,25 @@ public class ProductEditController {
     @FXML
     private ComboBox<ProductType> typeField;
     @FXML
-    private CheckBox freeShippingCheckBox;
+    private CheckBox freeShippingField;
 
 
     @FXML
     private void initialize() {
-       typeField.getItems().addAll(ProductType.values());
+        typeField.getItems().addAll(ProductType.values());
     }
 
     public void setProductEditStage(Stage productEditStage) {
         this.productEditStage = productEditStage;
     }
 
-    public void setProduct(Product product) {
+    public void setProductFields(Product product) {
         this.product = product;
         nameField.setText(product.getName());
-        amountField.setText(product.getAmount().asObject().getValue().toString());
+        amountField.setText(product.amountProperty().asObject().getValue().toString());
         product.checkAvailability();
-        //typeField.set
-        // nameLabel
+        typeField.setValue(product.getProductType());
+        freeShippingField.setSelected(product.isFreeShipping());
     }
 
 
@@ -52,6 +52,8 @@ public class ProductEditController {
         if (isInputValid()) {
             product.setName(nameField.getText());
             product.setAmount(Integer.parseInt(amountField.getText()));
+            product.setType((typeField.getSelectionModel().getSelectedItem()));
+            product.setFreeShipping(freeShippingField.isSelected());
             okClicked = true;
             productEditStage.close();
         }

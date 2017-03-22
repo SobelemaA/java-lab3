@@ -1,11 +1,9 @@
 package app;
 
 import app.model.Product;
-import app.model.ProductType;
 import app.view.ProductEditController;
 import app.view.ProductOverviewController;
 import javafx.application.Application;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,13 +23,13 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
-    private ObservableList<Product> productData = FXCollections.observableArrayList();
+    private final ObservableList<Product> productData = FXCollections.observableArrayList();
 
     public MainApp() {
-        productData.add(new Product("Tacos", 0, new SimpleObjectProperty<>(FOOD)));
-        productData.add(new Product("Pilsner Urquell", 1, new SimpleObjectProperty<>(BEER)));
-        productData.add(new Product("Dom Perignon", 2, new SimpleObjectProperty<>(WINE)));
-        productData.add(new Product("Marlboro Red", 3, new SimpleObjectProperty<>(CIGARETTE)));
+        productData.add(new Product("Tacos", 0, new SimpleObjectProperty<>(FOOD), false));
+        productData.add(new Product("Pilsner Urquell", 1, new SimpleObjectProperty<>(BEER), true));
+        productData.add(new Product("Dom Perignon", 2, new SimpleObjectProperty<>(WINE), false));
+        productData.add(new Product("Marlboro Red", 3, new SimpleObjectProperty<>(CIGARETTE), true));
     }
 
     public static void main(String[] args) {
@@ -62,7 +60,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,10 +71,8 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("view/ProductOverview.fxml"));
             AnchorPane productOverview = loader.load();
             rootLayout.setCenter(productOverview);
-
             ProductOverviewController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,10 +91,9 @@ public class MainApp extends Application {
 
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
             ProductEditController controller = loader.getController();
             controller.setProductEditStage(dialogStage);
-            controller.setProduct(product);
+            controller.setProductFields(product);
             dialogStage.showAndWait();
             return controller.isOkClicked();
         } catch (IOException e) {
@@ -107,6 +101,4 @@ public class MainApp extends Application {
             return false;
         }
     }
-
-
 }

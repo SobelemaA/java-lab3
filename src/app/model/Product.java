@@ -3,19 +3,18 @@ package app.model;
 import javafx.beans.property.*;
 
 public class Product {
-    private StringProperty name;
-    private IntegerProperty amount;
+    private final StringProperty name;
+    private final IntegerProperty amount;
     private ObjectProperty<ProductType> type;
     private BooleanProperty inStock;
-    private BooleanProperty freeShipping;
+    private final BooleanProperty freeShipping;
 
     public Product() {
-        this(null, 0, null);
+        this("", 0, null, false);
         inStock = new SimpleBooleanProperty(false);
-        freeShipping = new SimpleBooleanProperty(false);
     }
 
-    public Product(String name, int amount, ObjectProperty<ProductType> type) {
+    public Product(String name, int amount, ObjectProperty<ProductType> type, Boolean freeShipping) {
         this.name = new SimpleStringProperty(name);
         this.amount = new SimpleIntegerProperty(amount);
         this.type = type;
@@ -24,7 +23,7 @@ public class Product {
         } else {
             inStock = new SimpleBooleanProperty(false);
         }
-        freeShipping = new SimpleBooleanProperty(false);
+        this.freeShipping = new SimpleBooleanProperty(freeShipping);
     }
 
     public String getName() {
@@ -39,7 +38,7 @@ public class Product {
         return name;
     }
 
-    public IntegerProperty getAmount() {
+    public IntegerProperty amountProperty() {
         return new SimpleIntegerProperty(amount.getValue());
     }
 
@@ -47,7 +46,7 @@ public class Product {
         this.amount.set(amount);
     }
 
-    public boolean isInStock() {
+    private boolean isInStock() {
         return inStock.get();
 
     }
@@ -72,22 +71,29 @@ public class Product {
         return this.type.get().toString();
     }
 
-    public void setType(ObjectProperty<ProductType> type) {
-        this.type = type;
+    public void setType(ProductType type) {
+        this.type = new SimpleObjectProperty<>(type);
     }
 
-    public StringProperty typeProperty() {
-        return new SimpleStringProperty(type.toString());
+    public ProductType getProductType() {
+        if (type != null) {
+            return type.get();
+        }
+        return null;
+    }
+
+    public boolean isFreeShipping() {
+        return freeShipping.get();
     }
 
     public void setFreeShipping(boolean freeShipping) {
         this.freeShipping.set(freeShipping);
     }
-    public String isFreeShipToString(){
-        if(freeShipping.getValue()){
+
+    public String isFreeShippingToString() {
+        if (freeShipping.getValue()) {
             return "Yes";
-        }
-        else{
+        } else {
             return "No";
         }
     }
